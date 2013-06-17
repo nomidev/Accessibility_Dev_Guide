@@ -12,7 +12,6 @@
 	<link type="text/css" rel="stylesheet" href="styles/shCoreDefault.css"/>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script type="text/javascript">SyntaxHighlighter.all();</script>
-
 	<style type="text/css">
 		strong {color: #ff6600;}
 		strong:before {content:"'";}
@@ -31,10 +30,8 @@
 		.scrollup {position:fixed; right:20px;bottom:20px; width:40px; height:40px; background:#5A86E4; color:#fff; text-align:center; line-height:40px; display:none;}
 	</style>
 </head>
-
 <body style="background: white; font-family: Helvetica">
 <div id="wrap">
-
 	<h1>웹접근성 개발 가이드 V 0.3</h1>
 	<p>작성자: 노종민 D / 최종수정일: 2013.06.17</p>
 	<p>
@@ -414,7 +411,7 @@
 		<p>th를 <strong>colspan이나 rowspan으로 셀병합</strong>한 경우 th의 <strong>scope 속성은 colgroup이나 rowgroup</strong>을 사용한다.</p>
 		<p>레이아웃용 테이블에 데이터 테이블 엘리먼트(caption, th, tbody, thead, tfoot)를 사용한 경우 오류로 처리함.<br />
 		th로 그룹핑 안될경우 &lt;thead&gt;생략가능, tbody만 있을 경우 &lt;tbody&gt;생략 가능</p>
-		<p>사파리나 크롬에서 col값으로 가로 크기가 안먹는 경우가 있다. 이는 caption을 감추기 위해 position:absolute를 준 경우 인데 position:absolute를 사용하지 않거나 display:none으로 처리하면 되는데 display:none을 사용하면 웹접근성에 위배된다는 의견도 있어 상화에 따라 판단하여 작업하면 될듯하다.</p>
+		<p>사파리나 크롬에서 col값으로 가로 크기가 안먹는 경우가 있다. 이는 caption을 감추기 위해 position:absolute를 준 경우 인데 position:absolute를 사용하지 않거나 display:none으로 처리하면 되는데 display:none을 사용하면 웹접근성에 위배된다는 의견도 있어 상황에 따라 판단하여 작업하면 될듯하다.</p>
 		<ul>
 			<li>참조자료</li>
 			<li><a href="http://html.nhncorp.com/accessibility/nwcag/checklist/2.3.1" target="_blank" title="새창열림">Naver caption</a></li>
@@ -523,9 +520,11 @@
 
 	<div>
 		<h3>22.주요 콘텐츠 헤딩 블럭</h3>
-		<p>웹 페이지의 내용을 대표하는 제목 및 주요 콘텐츠 블록의 제목을 &lt;h1&gt;~&lt;h6&gt;으로 제공</p>
+		<ul>
+			<li>웹 페이지의 내용을 대표하는 제목 및 주요 콘텐츠 블록의 제목을 &lt;h1&gt;~&lt;h6&gt;으로 제공</li>
+			<li>heading태그를 그룹으로 사용할땐 <a href="http://www.w3schools.com/tags/tag_hgroup.asp" target="_blank" title="새창열림">hgroup</a>으로 묶어줌(ie9 이상 브라우저)</li>
+		</ul>
 		<pre class="brush: xhtml;">
-			<!-- heading태그를 그룹으로 사용할땐 hgroup으로 묶어줌 -->
 			<hgroup>
 				<h1><a href="#">logo</a></h1>
 				<h2>title</h2>
