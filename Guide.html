@@ -1,0 +1,529 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta content="노종민" name="author" />
+	<meta content="CSS 웹접근성 개발 가이드" name="description" />
+	<title>Accessibility_Dev_Guide</title>
+	<script type="text/javascript" src="scripts/shCore.js"></script>
+	<script type="text/javascript" src="scripts/shBrushJScript.js"></script>
+	<script type="text/javascript" src="scripts/shBrushCss.js"></script>
+	<script type="text/javascript" src="scripts/shBrushXml.js"></script>
+	<link type="text/css" rel="stylesheet" href="styles/shCoreDefault.css"/>
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+	<style type="text/css">
+		strong {color: #ff6600;}
+		strong:before {content:"'";}
+		strong:after {content:"'";}
+		h3 span {color:#5A86E4;}
+		.syntaxhighlighter {font-size: 12px !important;}
+		.blind {font-size: 0;height: 0;overflow: hidden;visibility: hidden;}
+		.paging a {text-decoration: none}
+		.paging em {text-decoration: underline; font-weight:bold; color:red; font-style:normal;}
+		.error {padding:5px; background:#fee0dd;overflow:hidden;}
+		.excellent {padding:5px; background:#eaf8ff;overflow:hidden;}
+		.news_latest {width:300px;border:1px solid #ccc;}
+		.news_latest h4 {float:left;margin:0;}
+		.news_latest span {float:right;}
+		.news_latest ul {clear:both;}
+	</style>
+</head>
+
+<body style="background: white; font-family: Helvetica">
+<div id="wrap">
+
+	<h1>웹접근성 개발 가이드 V 0.2</h1>
+	<p>작성자: 노종민 D / 최종수정일: 2013.06.17</p>
+	<p>본 문서는 <a href="http://ui.daum.net/accessibility/pc" target="_blank" title="새창열림">다룸</a>과 <a href="http://html.nhncorp.com/accessibility/manual" target="_blank" title="새창열림">널리</a>를 참조하여 html 코드 위주로 작성하였으며 SyntaxHighlighter에서 닫기태그 오류가 있어<br />
+	문서 타입에 따라 종료태그가 없는 앨리먼트의 경우(img, input 등) 반드시 마지막에 닫기태그 <strong> /></strong>로 닫아주어야 함.</p>
+	<p><a href="http://gov.seoul.go.kr/files/2013/01/50f63edd7c0672.25166080.pdf" target="_blank" title="PDF 다운로드">웹접근성 평가 실무 참조 PDF</a></p>
+	<div>
+		<h2>웹접근성 검사도구 Firefox 설치 및 부가기능 다운로드</h2>
+		<p><a href="http://download.mozilla.org/?product=firefox-21.0&amp;os=win&amp;lang=ko">Firefox Download</a></p>
+		<p>부가기능 설치 <strong>(부가기능은 firefox 설치 후 firefox로 접근해야 함)</strong></p>
+		<ul>
+			<li><a href="https://addons.mozilla.org/ko/firefox/addon/openwax/" target="_blank" title="새창열림">Open Wax Download</a></li>
+			<li><a href="https://addons.mozilla.org/ko/firefox/addon/html-validator/" target="_blank" title="새창열림">Html Validator Download</a></li>
+			<li><a href="https://addons.mozilla.org/ko/firefox/addon/web-developer/?src=search/" target="_blank" title="새창열림">Web Developer Download</a></li>
+			<li><a href="https://addons.mozilla.org/ko/firefox/addon/firebug/" target="_blank" title="새창열림">firebug Download</a></li>
+		</ul>
+		<p>부가기능 별 사용법</p>
+		<ul>
+			<li><a href="http://openwax.miya.pe.kr/#guide" target="_blank" title="새창열림">Open Wax 사용법</a></li>
+			<li><a href="http://koyose.tistory.com/282" target="_blank" title="새창열림">Html Validator 사용법</a></li>
+			<li><a href="http://blog.naver.com/PostView.nhn?blogId=dalcomuki&amp;logNo=50164365529/" target="_blank" title="새창열림">Web Developer Download</a></li>
+			<li><a href="http://www.clearboth.org/firebug_guideline/" target="_blank" title="새창열림">firebug 사용법</a></li>
+		</ul>
+		<p>위의 평가 도구가 웹접근성 작업에 도움은 되지만 100% 신뢰할수는 없기 때문에 작업자 판단에 따라 사용.</p>
+	</div>
+
+	<div>
+		<h3>1.적절한 대체 텍스트 제공</h3>
+		<p>이미지 사용시 반드시 <strong>alt</strong>태그를 사용해야 하며 alt태그의 내용은 <strong>이미지에 있는 텍스트와 같은 내용을 삽입</strong>한다.<br />
+		만약 이미지에 텍스트가 없거나 의미없는 이미지(불릿이나 아이콘등)일 경우에는 <strong>빈값</strong>으로 넣어준다.</p>
+		<pre class="brush: xhtml;">
+			<!-- 이미지에 텍스트가 있을경우 -->
+			<img src="이미지경로" alt="이미지 컨텐츠 내용" />
+			<!-- 이미지에 텍스트가 없을경우 -->
+			<img src="이미지경로" alt="" />
+		</pre>
+		<p>만약 이미지 내용이 많은 경우 <a href="http://blog.naver.com/3ojhcms3?Redirect=Log&amp;logNo=140154120652" target="_blank" title="새창열림">IR기법</a>이나 <a href="http://www.w3schools.com/tags/att_img_longdesc.asp" target="_blank" title="새창열림">longdesc</a>로 대체해도 됨</p>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/1.1.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_1_1_1" target="_blank" title="새창열림">Daum 다룸</a>)</p>
+	</div>
+
+	<div>
+		<h3>2.자막제공</h3>
+		<p>멀티미디어 컨텐츠에는 자막, 원고 또는 수화를 제공해야한다.</p>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/1.2.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_1_2_1" target="_blank" title="새창열림">Daum 다룸</a>)</p>
+	</div>
+
+	<div>
+		<h3>3.색에 무관한 컨텐츠 인식</h3>
+		<p>컨텐츠는 색에 관계없이 인식될 수 있어야 한다.<br />
+		페이징 같은 경우 색상만으로 구분하기 보다는 폰트 <strong>굵기/밑줄</strong>과 같은 것으로 구분해주는 것이 인식이 더 용이하다. <br />
+		또 그래프나 차트의 경우도 색상만으로 구별하기 보다는 색이나 모양 패턴으로 구분주는 것이 좋다.</p>
+		<span class="paging">
+		<a href="#">1</a>
+		<a href="#">2</a>
+		<em>3</em>
+		<a href="#">4</a>
+		<a href="#">5</a>
+		</span>
+		<pre class="brush: css;">
+			<style type="text/css">
+				.paging em {text-decoration: underline; font-weight:bold; color:red; font-style:normal;}
+			</style>
+		</pre>
+		<pre class="brush: xhtml;">
+			<span class="paging">
+				<a href="#">1</a>
+				<a href="#">2</a>
+				<em>3</em><!-- em은 strong으로 대체 해도 상과 없으며 예시로 em 사용 -->
+				<a href="#">4</a>
+				<a href="#">5</a>
+			</span>
+		</pre>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/2.1.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_1_3_1" target="_blank" title="새창열림">Daum 다룸</a>)</p>
+	</div>
+
+	<div>
+		<h3>4.명확한 지시사항 제공</h3>
+		<p>지시사항은 <strong>모양, 크기, 위치, 방향, 색, 소리</strong> 등에 관계없이 인식될 수 있어야 한다.</p>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/1.3.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_1_3_2" target="_blank" title="새창열림">Daum 다룸</a>)</p>
+	</div>
+
+	<div>
+		<h3>5.텍스트 컨텐츠의 명도 대비</h3>
+		<p>텍스트 컨텐츠와 배경 간의 명도 대비는 <strong>4.5:1 이상</strong>이어야 한다.</p>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/1.3.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_1_3_2" target="_blank" title="새창열림">Daum 다룸</a>)</p>
+	</div>
+
+	<div>
+		<h3>6.배경음 사용금지</h3>
+		<p>자동으로 재생되는 배경음을 사용하지 않아야 한다.</p>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/3.2.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_1_3_4" target="_blank" title="새창열림">Daum 다룸</a>)</p>
+	</div>
+
+	<div>
+		<h3>7.키보드 사용 보장</h3>
+		<p>모든 기능은 키보드만으로도 사용할 수 있어야 한다.</p>
+		<ul>	
+			<li>마우스로 작동되는 동작은 키보드로도 작동되야 한다.</li>
+			<li>&lt;a&gt;에 href속성이 없어 키보드 포커스가 접근할 수 없는 경우</li>
+			<li>레이어 팝업의 경우 팝업 내에서도 키보드 포커스 이동이 논리적으로 사용 가능해야 하며 팝업이 닫힐경우 팝업이 열리기 전 위치로 포커스를 이동시켜야 한다.</li>
+		</ul>
+		<pre class="brush: xhtml;">
+			<!-- 링크를 href 속성없이 스크립트로만 처리한 경우 포커스가 접근할 수 없고 스크립트가 실해되지 않는 브라우저에서는 링크를 사용할 수 없음. -->
+			<a onclick="javascript:...">link</a>
+			<!-- href 속성에 스크립트가 실행되지 않아도 이동할 수 있는 링크 주소를 넣어주는 것이 바람직하지만 이는 필수에서 권고사항으로 변경 -->
+			<!-- 그렇지만 href 속성은 빈값으로라도 넣어줘야 키보드 접근이 가능하다. -->
+			<a href="경로" onclick="javascript:...">link</a>
+		</pre>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/6.1.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_2_1_1" target="_blank" title="새창열림">Daum 다룸 키보드 사용</a>)</p>
+	</div>
+
+	<div>
+		<h3>8.초점 이동</h3>
+		<p>키보드에 의한 초점은 논리적으로 이동해야 하며, 시각적으로 구별할 수 있어야 한다.</p>
+		<ul>	
+			<li>초점을 막지 않아야 함</li>
+			<li>특정 영역(컨트롤, 사용자 입력 등)이 위치 지정 도구(마우스)나 키보드 조작을 통해 초점(선택/클릭)을 받았을 때, 해당 영역을 시각적으로 인지할 수 있도록 초점을 막지 말아야 함</li>
+			<li>논리적인 순서</li>
+			<li>사용자가 키보드를 이용하여 초점을 이동할 때, 해당 초점이 논리적인 순서에 따라 진행해야 함 (일반적으로, 좌측 상단에서 우측 하단 방향으로)</li>
+			<li>인터렉션 개체들의 초점을 강제로 제거하지 않음</li>
+			<li><strong>tabindex</strong> 사용하지 않는 것을 권장</li>
+			<li>tabindex를 권장하지는 않지만 레이어팝업의 경우 레이어팝업으로 포커스 이동이 있을 수 있게때문에 tabindex사용(단 레이어팝업이 닫혔을 경우 포커스 이동 전으로 가야함)</li>
+		</ul>
+		<pre class="brush: css;">
+			<style type="text/css">
+				/* outline:none은 앵커 포커스를 시각적으로 구분할 수 없게 한다. */
+				/* CSS사이트 wsg_base.css line:28 삭제 */
+				a:focus {outline:none;}
+			</style>
+		</pre>
+		<pre class="brush: xhtml;">
+			<!-- 링크에 점선을 없애기위해 넣은 onfocus="this.blur()"는 포커스를 시각적으로 구분할 수 없게 한다. -->
+			<a href="#" onfocus="this.blur()">link</a>
+			<!-- onfocus="this.blur()" 제거 -->
+			<a href="#">link</a>
+		</pre>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/6.3.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_2_1_2" target="_blank" title="새창열림">Daum 다룸</a>)</p>
+	</div>
+
+	<div>
+		<h3>9.응답시간 조절</h3>
+		<p>시간 제한이 있는 콘텐츠는 응답시간을 조절할 수 있어야 한다.</p>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/4.1.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_2_2_1" target="_blank" title="새창열림">Daum 다룸</a>)</p>
+	</div>
+
+	<div>
+		<h3>10.정지 기능 제공</h3>
+		<p>자동으로 변경되는 콘텐츠는 움직임을 제어할 수 있어야 한다.</p>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/4.2.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_2_2_2" target="_blank" title="새창열림">Daum 다룸</a>)</p>
+	</div>
+
+	<div>
+		<h3>11.깜빡임과 번쩍임 사용 제한</h3>
+		<p>초당 3~50회 주기로 깜빡이거나 번쩍이는 콘텐츠를 제공하지 않아야 한다.</p>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/5.1.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_2_3_1" target="_blank" title="새창열림">Daum 다룸</a>)</p>
+	</div>
+
+	<div>
+		<h3>12.반복영역 건너뛰기</h3>
+		<p>메뉴나 콘텐츠의 반복되는 영역은 건너뛸 수 있어야 한다.</p>
+		<pre class="brush: css;">
+			/* 건너뛰기 스타일 중 한가지 예 */
+			<style type="text/css">
+				#skip a {position:absolute; top:-1000px; left:0; width:100%;}
+				#skip a:hover,
+				#skip a:focus,
+				#skip a:active {position:absolute; top:0; left:0; padding:5px 0; width:100%; height:auto; 
+				text-align:center; color:#fff; background:#000;display:block; overflow:hidden;z-index:10000}
+			</style>
+		</pre>
+		<pre class="brush: xhtml;">
+			<!-- 건너뛰기 링크 -->
+			<div id="skip">
+				<a href="#gnb">메인메뉴로 바로가기</a>
+				<a href="#content">본문으로 바로가기</a>
+			</div>
+			<div id="gnb"></div>
+			<div id="content"></div>
+		</pre>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/7.2.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_2_4_1" target="_blank" title="새창열림">Daum 다룸</a>)</p>
+	</div>
+
+	<div>
+		<h3>13.제목 제공</h3>
+		<p>페이지, 프레임, 콘텐츠 블록에는 적절한 제목을 제공해야 한다.</p>
+		<ul>	
+			<li>&lt;head&gt; 내의 &lt;title&gt; 요소 유무 체크</li>
+			<li>&lt;iframe&gt; 요소의 &lt;title&gt; 속성 유무 체크</li>
+			<li>&lt;frame&gt; 요소의 &lt;title&gt; 속성 유무 체크</li>
+		</ul>
+		<pre class="brush: xhtml;">
+			<!-- 웹 페이지에 적절한 제목이 제공됨
+			<head>
+			    <title>블로그스킨 | Daum 블로그</title>
+			</head> -->
+			<!-- head태그는 SyntaxHighlighter에서 보이지 않아 주석으로 감쌌지만 실제로 주석은 사용하지 않음. -->
+			<!-- iframe에 적절한 title값이 적용되어 있는 컨텐츠 -->
+			<iframe title="댓글 영역"></iframe>
+		</pre>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/7.1.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_2_4_2" target="_blank" title="새창열림">Daum 다룸</a>)</p>
+	</div>
+
+	<div>
+		<h3>14.적절한 링크 텍스트</h3>
+		<p>링크 텍스트는 용도나 목적을 이해할 수 있도록 제공해야 한다.</p>
+		<div class="news_latest">
+			<h4>News</h4>
+			<span><a href="#" title="뉴스 더보기">more</a></span>
+			<ul>
+				<li>뉴스리스트 01</li>
+				<li>뉴스리스트 01</li>
+				<li>뉴스리스트 01</li>
+			</ul>
+		</div>
+		<pre class="brush: xhtml;">
+			<div>
+				<h4>News</h4>
+				<span><a href="#" title="뉴스 더보기">more</a></span>
+				<ul>
+					<li>뉴스리스트 01</li>
+					<li>뉴스리스트 01</li>
+					<li>뉴스리스트 01</li>
+				</ul>
+			</div>
+		</pre>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/7.3.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_2_4_3" target="_blank" title="새창열림">Daum 다룸</a>)</p>
+	</div>
+
+	<div>
+		<h3>15.기본 언어 표시</h3>
+		<p>주로 사용하는 언어를 명시해야 한다.</p>
+		<ul>
+			<li>XHTML은 "lang"과 "xml:lang" 제공</li>
+			<li>HTML5는 "lang"만 제공</li>
+		</ul>
+		<div>
+			<h4>우수사례</h4>
+			<pre class="brush: xml;">
+				<!-- html5 
+				<html lang="ko"> -->
+				<!-- XHTML 1.0 
+				<html ... lang="ko" xml:lang="ko"> -->
+				<!-- 페이지 내에서 언어가 바뀔때 언어 표시 -->
+				<p>중국어로는 "안녕하세요"라고 인사할 때 <span lang="zh">你好</span>라고 말합니다.</p>
+			</pre>
+		</div>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/3.1.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_3_1_1" target="_blank" title="새창열림">Daum 다룸</a>)</p>
+	</div>
+
+	<div>
+		<h3>16.사용자 요구에 따른 실행</h3>
+		<p>사용자가 의도하지 않은 기능(새 창, 초점 변화 등)은 실행되지 않아야 한다.</p>
+		<ul>
+			<li>실행은 onclick, enter 로 가능하게 적용한다.</li>
+			<li>새창 및 팝업창의 경우 a 요소에 target="_blank" 로 지정한다.</li>
+			<li>웹 사이트 로딩시 자동으로 실행되는 콘텐츠(팝업창, 레이어 팝업, 배경음 포함) 을 사용하지 않는다.</li>
+			<li>input에 포커스만으로 새창이나 페이지 이동이 되서는 안된다.</li>
+		</ul>
+		<form name="" action="" method="get">
+			<label for="link" class="blind">사이트링크</label>
+			<select id="link" title="링크선택">
+				<option value="http://www.google.com">google</option>
+				<option value="http://www.apple.com">apple</option>
+				<option value="http://www.naver.com">naver</option>
+				<option value="http://www.daum.net">daum</option>
+			</select>
+			<input type="button" value="이동" title="새창열림" />
+		</form>
+		<pre class="brush: xhtml;">
+			<form name="" action="" method="get">
+				<label for="link" class="blind">사이트링크</label>
+				<select id="link" title="링크선택">
+					<option value="http://www.google.com">google</option>
+					<option value="http://www.apple.com">apple</option>
+					<option value="http://www.naver.com">naver</option>
+					<option value="http://www.daum.net">daum</option>
+				</select>
+				<input type="button" value="이동" title="새창열림" />
+			</form>
+		</pre>
+		<p>target="blank"를 사용한 경우 title="새창열림" 생략가능</p>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/8.1.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_3_2_1" target="_blank" title="새창열림">Daum 다룸</a>)</p>
+	</div>
+
+	<div>
+		<h3>17.콘텐츠의 선형화</h3>
+		<ul>	
+			<li>콘텐츠는 논리적인 순서로 제공해야 한다.</li>
+			<li>성능 이슈로 "제목" 다음 "더보기" 가 오는 경우가 있다. 다만 "제목 > 내용 > 더보기" 로 권장한다.</li>
+			<li>"더보기"의 경우 명시적으로 어떠한 더보기 인지 제공해야 함</li>
+			<li>GNB나 TAB의 경우 아래와 같이 논리적인 순서로 마크업 해야 함</li>
+			<li>Tab키와 Shift+Tab키로 이동시 이동순서가 논리적이지 않으며 일관성이 없는 경우</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="#">menu_01</a>
+				<ul>
+					<li>menu_01_1</li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">menu_02</a>
+				<ul>
+					<li>menu_02_1</li>
+					<li>menu_02_2</li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">menu_03</a>
+				<ul>
+					<li>menu_03_1</li>
+					<li>menu_03_2</li>
+				</ul>
+			</li>
+		</ul>
+		<pre class="brush: xhtml;">
+			<ul>
+				<li>
+					<a href="#">menu_01</a>
+					<ul>
+						<li>menu_01_1</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#">menu_02</a>
+					<ul>
+						<li>menu_02_1</li>
+						<li>menu_02_2</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#">menu_03</a>
+					<ul>
+						<li>menu_03_1</li>
+						<li>menu_03_2</li>
+					</ul>
+				</li>
+			</ul>
+		</pre>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/6.2.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_3_3_1" target="_blank" title="새창열림">Daum 다룸</a>)</p>
+	</div>
+
+	<div>
+		<h3>18.표의 구성</h3>
+		<p>표는 이해하기 쉽게 구성해야 한다.<br />
+		복잡한 데이터를 표로 제공할 경우, 시각장애인 등도 이해할 수 있도록 표의 이해를 돕기 위한 내용 및 구조에 대한 정보를 제공해야 한다.</p>
+		<ul>
+			<li>summary 속성 및 &lt;caption&gt; 요소 유무 체크</li>
+			<li>summary 속성 값과 &lt;caption&gt; 요소 값의 중복 여부 체크</li>
+			<li>&lt;th&gt; 요소 유무 체크</li>
+			<li>scope 속성값이 적절한지 체크</li>
+		</ul>
+		<pre class="brush: xhtml;">
+			<table summary="테이블에 대한 설명">
+				<caption>테이블 제목</caption>
+				<thead>
+					<tr>
+						<th scope="col">제목</th>
+						<th scope="col">제목</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>내용</td>
+						<td>내용</td>
+					</tr>
+				</tbody>
+			</table>
+		</pre>
+		<p>th를 <strong>colspan이나 rowspan으로 셀병합</strong>한 경우 th의 <strong>scope 속성은 colgroup이나 rowgroup</strong>을 사용한다.</p>
+		<p>레이아웃용 테이블에 데이터 테이블 엘리먼트(caption, th, tbody, thead, tfoot)를 사용한 경우 오류로 처리함.<br />
+		th로 그룹핑 안될경우 &lt;thead&gt;생략가능, tbody만 있을 경우 &lt;tbody&gt;생략 가능</p>
+		<p>사파리나 크롬에서 col값으로 가로 크기가 안먹는 경우가 있다. 이는 caption을 감추기 위해 position:absolute를 준 경우 인데 position:absolute를 사용하지 않거나 display:none으로 처리하면 되는데 display:none을 사용하면 웹접근성에 위배된다는 의견도 있어 상화에 따라 판단하여 작업하면 될듯하다.</p>
+		<ul>
+			<li>참조자료</li>
+			<li><a href="http://html.nhncorp.com/accessibility/nwcag/checklist/2.3.1" target="_blank" title="새창열림">Naver caption</a></li>
+			<li><a href="http://html.nhncorp.com/accessibility/nwcag/checklist/2.3.2" target="_blank" title="새창열림">Naver thead,tbody,tfoot</a></li>
+			<li><a href="http://html.nhncorp.com/accessibility/nwcag/checklist/2.3.3" target="_blank" title="새창열림">Naver th</a></li>
+		 	<li><a href="http://ui.daum.net/accessibility/pc/index_2_1_2" target="_blank" title="새창열림">table</a></p></li>
+		 </ul>
+	</div>
+
+	<div>
+		<h3>19.레이블 제공</h3>
+		<p>입력 서식에는 대응하는 레이블을 제공해야 한다.</p>
+		<ul>
+			<li>입력 서식(&lt;input&gt;, &lt;textarea&gt;, &lt;select&gt; 요소 등)에 대응하는 레이블(&lt;label&gt; 요소, title 속성)을 제공해야 한다.</li>
+		</ul>
+		<form name="" action="" method="get">
+			<fieldset>
+				<p>
+					<label for="name">name</label>
+					<input type="text" id="name" title="이름 입력" size="10" />
+				</p>
+				<p>
+					<label for="email">email</label>
+					<input type="text" id="email" title="이메일 입력" size="10" />
+					<label for="selectEmail" class="blind">이메일주소</label>
+					<select id="selectEmail" title="이메일 선택">
+						<option value="gmail.com">google</option>
+						<option value="me.com">apple</option>
+						<option value="naver.com">naver</option>
+						<option value="hanmail.net">daum</option>
+					</select>
+				</p>
+				<p>
+					<label for="phone">phone</label>
+					<input type="text" id="phone" size="5" title="앞번호"/> - 
+					<input type="text" title="중간번호" size="5" /> - 
+					<input type="text" title="끝번호" size="5" />
+				</p>
+			</fieldset>
+		</form>
+		<pre class="brush: xhtml;">
+			<form name="" action="" method="get">
+				<fieldset>
+					<p>
+						<label for="name">name</label>
+						<input type="text" id="name" title="이름 입력" size="10" />
+					</p>
+					<p>
+						<label for="email">email</label>
+						<input type="text" id="email" title="이메일 입력" size="10" />
+						<label for="selectEmail" class="blind">이메일주소</label>
+						<select id="selectEmail" title="이메일 선택">
+							<option value="gmail.com">google</option>
+							<option value="me.com">apple</option>
+							<option value="naver.com">naver</option>
+							<option value="hanmail.net">daum</option>
+						</select>
+					</p>
+					<p>
+						<label for="phone">phone</label>
+						<input type="text" id="phone" size="5" title="앞번호"/> - 
+						<input type="text" title="중간번호" size="5" /> - 
+						<input type="text" title="끝번호" size="5" />
+					</p>
+				</fieldset>
+			</form>
+		</pre>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/8.2.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_3_4_1" target="_blank" title="새창열림">Daum 다룸</a>)</p>
+	</div>
+
+	<div>
+		<h3>20.오류정정</h3>
+		<p>사용자 입력 오류가 발생했을 시, 사용자에게 알려주고 수정이 필요한 곳에 포커스가 이동</p>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/8.3.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_3_4_2" target="_blank" title="새창열림">Daum 다룸</a>)</p>
+	</div>
+
+	<div>
+		<h3>21.마크업 오류 방지</h3>
+		<p>마크업 언어의 요소는 열고 닫음, 중첩 관계 및 속성 선언에 오류가 없어야 한다.</p>
+		<ul>
+			<li>태그의 열고 닫음 체크</li>
+			<li>태그의 중첩이 올 바른지 체크</li>
+			<li>한 요소에 중복된 속성 선언 여부 체크</li>
+			<li>한 페이지에 <strong>중복된 id 속성값 선언 여부 체크</strong></li>
+			<li><strong>인라인 요소안에 블록요소 포함 여부 체크</strong>(대표적 인라인 요소 span)</li>
+		</ul>
+		<div class="error">
+			<h4>오류사례</h4>
+			<pre class="brush: xhtml;">
+				<p>요소를 여는 태그의 닫음 표시가 불명확한 문단입니다.<p>
+				<h4><a>공감! 네티즌리뷰.</h4></a>
+				<input type="text" value=""가나다"">
+				<span><h1></h1><p></p><li></li></span>
+			</pre>
+		</div>
+		<div class="excellent">
+			<h4>우수사례</h4>
+			<pre class="brush: xhtml;">
+				<p>요소를 여는 태그의 닫음 표시가 불명확한 문단입니다.</p>
+				<h4><a>공감! 네티즌리뷰.</a></h4>
+				<input type="text" value="＆quot;가나다＆quot;">
+			</pre>
+		</div>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/2.2.1" target="_blank" title="새창열림">Naver 널리</a> <a href="http://ui.daum.net/accessibility/pc/index_4_1_1" target="_blank" title="새창열림">Daum 다룸</a>)</p>
+	</div>
+
+	<div>
+		<h3>22.주요 콘텐츠 헤딩 블럭</h3>
+		<p>웹 페이지의 내용을 대표하는 제목 및 주요 콘텐츠 블록의 제목을 &lt;h1&gt;~&lt;h6&gt;으로 제공</p>
+		<pre class="brush: xhtml;">
+			<!-- heading태그를 그룹으로 사용할땐 hgroup으로 묶어줌 -->
+			<hgroup>
+				<h1><a href="#">logo</a></h1>
+				<h2>title</h2>
+				<h3>sub_title</h3>
+			</hgroup>
+		</pre>
+		<p>(참조자료 <a href="http://html.nhncorp.com/accessibility/nwcag/checklist/7.1.3" target="_blank" title="새창열림">Naver 널리</a>)</p>
+	</div>
+</div>
+</body>
+</html>
